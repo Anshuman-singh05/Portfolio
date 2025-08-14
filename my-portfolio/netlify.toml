@@ -1,0 +1,18 @@
+# Netlify Build & Redirect Configuration
+
+[build]
+  # Build command for your Vite project
+  command = "npm run build"
+  
+  # The directory that contains your built site (for Vite, it's 'dist')
+  publish = "dist"
+  
+  # The directory where your frontend code is (root of the repo)
+  base = "/"
+
+# Redirect rule for Single Page Applications (SPA)
+# This rule ensures that all paths are sent to index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
