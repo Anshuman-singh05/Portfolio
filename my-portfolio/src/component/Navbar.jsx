@@ -1,5 +1,4 @@
-// src/components/NavbarComponent.jsx
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link } from "react-scroll";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
@@ -8,6 +7,7 @@ import { ThemeContext } from "../context/ThemeContext.jsx";
 
 const NavbarComponent = () => {
   const { theme } = useContext(ThemeContext);
+  const [expanded, setExpanded] = useState(false); // navbar expand state
 
   const navLinks = [
     { id: 1, text: "Home", to: "home" },
@@ -20,6 +20,7 @@ const NavbarComponent = () => {
     <Navbar
       expand="lg"
       fixed="top"
+      expanded={expanded}
       className={`py-3 ${theme === "dark" ? "bg-dark navbar-dark" : "bg-light navbar-light"}`}
     >
       <Container>
@@ -29,7 +30,10 @@ const NavbarComponent = () => {
         </Navbar.Brand>
 
         {/* Toggle for mobile */}
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle
+          aria-controls="basic-navbar-nav"
+          onClick={() => setExpanded(expanded ? false : true)}
+        />
 
         {/* Nav Links */}
         <Navbar.Collapse id="basic-navbar-nav">
@@ -44,6 +48,7 @@ const NavbarComponent = () => {
                 offset={-70}
                 duration={500}
                 className="nav-link custom-nav-link"
+                onClick={() => setExpanded(false)}
               >
                 {link.text}
               </Link>
@@ -65,6 +70,7 @@ const NavbarComponent = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="d-flex align-items-center"
+              onClick={() => setExpanded(false)}
             >
               <FaGithub size={30} />
             </Nav.Link>
@@ -73,6 +79,7 @@ const NavbarComponent = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="d-flex align-items-center"
+              onClick={() => setExpanded(false)}
             >
               <FaLinkedin size={30} />
             </Nav.Link>
