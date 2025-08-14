@@ -7,16 +7,14 @@ dotenv.config();
 
 const app = express();
 
-// ✅ Allowed origins environment ke hisaab se
+// ✅ Allowed origins
 const allowedOrigins = [
-  'http://localhost:5173', // Development
-  'https://anshumansinghlegend.netlify.app' // Production
+  "http://localhost:5173", // Development
+  "https://anshumansinghlegend.netlify.app" // Production
 ];
 
-// ✅ CORS middleware — routes se pehle
 app.use(cors({
   origin: (origin, callback) => {
-    // Agar koi origin nahi (Postman, server-to-server) ya allowed hai
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -26,17 +24,21 @@ app.use(cors({
   credentials: true
 }));
 
-// ✅ JSON parser
 app.use(express.json());
 
-// ✅ Routes
-import userRoutes from "./routes/userRoutes.js";
-app.use("/api/users", userRoutes);
+// ✅ Routes import
+import contactRoutes from "./routes/contact.js";
+import authRoutes from "./routes/auth.js";
+import projectRoutes from "./routes/project.js";
+
+// ✅ Mount routes
+app.use("/api/contact", contactRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/projects", projectRoutes);
 
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
-// ✅ Server listen
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
