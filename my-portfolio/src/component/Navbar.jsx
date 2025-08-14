@@ -1,5 +1,5 @@
 // src/components/NavbarComponent.jsx
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link } from "react-scroll";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
@@ -8,6 +8,7 @@ import { ThemeContext } from "../context/ThemeContext.jsx";
 
 const NavbarComponent = () => {
   const { theme } = useContext(ThemeContext);
+  const [expanded, setExpanded] = useState(false); // ✅ Added expanded state
 
   const navLinks = [
     { id: 1, text: "Home", to: "home" },
@@ -17,73 +18,85 @@ const NavbarComponent = () => {
   ];
 
   return (
-    <Navbar
-      expand="lg"
-      fixed="top"
-      className={`py-3 ${theme === "dark" ? "bg-dark navbar-dark" : "bg-light navbar-light"}`}
-    >
-      <Container>
-        {/* Brand */}
-        <Navbar.Brand href="#" style={{ fontWeight: "bold" }}>
-          Anshuman Singh
-        </Navbar.Brand>
+    <>
+      <Navbar
+        expand="lg"
+        fixed="top"
+        expanded={expanded} // ✅ Connect state
+        className={`py-3 ${theme === "dark" ? "bg-dark navbar-dark" : "bg-light navbar-light"}`}
+      >
+        <Container>
+          {/* Brand */}
+          <Navbar.Brand href="#" style={{ fontWeight: "bold" }}>
+            Anshuman Singh
+          </Navbar.Brand>
 
-        {/* Toggle for mobile */}
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          {/* Toggle button */}
+          <Navbar.Toggle
+            aria-controls="basic-navbar-nav"
+            onClick={() => setExpanded(!expanded)} // ✅ Toggle on click
+          />
 
-        {/* Nav Links */}
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto align-items-center">
-            {navLinks.map((link) => (
-              <Link
-                key={link.id}
-                activeClass="active-link"
-                to={link.to}
-                spy={true}
-                smooth={true}
-                offset={-70}
-                duration={500}
-                className="nav-link custom-nav-link"
+          {/* Nav links */}
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ms-auto align-items-center">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.id}
+                  activeClass="active-link"
+                  to={link.to}
+                  spy={true}
+                  smooth={true}
+                  offset={-70}
+                  duration={500}
+                  className="nav-link custom-nav-link"
+                  onClick={() => setExpanded(false)} // ✅ Collapse menu on click
+                >
+                  {link.text}
+                </Link>
+              ))}
+
+              {/* Resume */}
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="nav-link"
+                style={{ cursor: "pointer" }}
+                onClick={() => setExpanded(false)} // ✅ Collapse menu
               >
-                {link.text}
-              </Link>
-            ))}
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="nav-link"
-              style={{ cursor: "pointer" }}
-              onClick={() => setExpanded(false)}
-            >
-              Resume
-            </a>
+                Resume
+              </a>
 
-            {/* Social Icons */}
-            <Nav.Link
-              href="https://github.com/Anshuman-singh05"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="d-flex align-items-center"
-            >
-              <FaGithub size={30} />
-            </Nav.Link>
-            <Nav.Link
-              href="https://www.linkedin.com/in/anshumansingh2005/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="d-flex align-items-center"
-            >
-              <FaLinkedin size={30} />
-            </Nav.Link>
+              {/* Social icons */}
+              <Nav.Link
+                href="https://github.com/Anshuman-singh05"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="d-flex align-items-center"
+              >
+                <FaGithub size={30} />
+              </Nav.Link>
+              <Nav.Link
+                href="https://www.linkedin.com/in/anshumansingh2005/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="d-flex align-items-center"
+              >
+                <FaLinkedin size={30} />
+              </Nav.Link>
 
-            {/* Theme Toggle */}
-            <ThemeToggleButton />
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
+              {/* Theme toggle */}
+              <ThemeToggleButton />
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
 
-      {/* Styles */}
+      {/* Spacer for fixed navbar */}
+      <div style={{ height: "80px" }} /> {/* Adjust if navbar height changes */}
+
+      {/* Custom CSS */}
       <style jsx>{`
         .custom-nav-link {
           cursor: pointer;
@@ -97,7 +110,7 @@ const NavbarComponent = () => {
           font-weight: bold;
         }
       `}</style>
-    </Navbar>
+    </>
   );
 };
 
