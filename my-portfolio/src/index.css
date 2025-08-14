@@ -1,0 +1,125 @@
+/* src/index.css */
+
+/* Light Theme Variables (Default) */
+:root {
+  --bg-color: #FFFFFF;
+  --text-color: #212529;
+  --text-muted-color: #6c757d;
+  --section-bg-color: #f8f9fa;
+  --navbar-bg: #ffffff;
+  --navbar-link-color: #343a40;
+  --social-icon-color: #212529;
+  --btn-outline-color: #212529;
+  --card-bg: #ffffff;
+  --card-border-color: rgba(0,0,0,.125);
+  --about-bg-color: #2c3e50;
+  --about-text-color: #ffffff;
+  --about-muted-color: rgba(255, 255, 255, 0.75);
+  --about-card-bg: #34495e;
+}
+
+/* Dark Theme Variables */
+[data-theme='dark'] {
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --text-muted-color: #888888;
+  --section-bg-color: #1e1e1e;
+  --navbar-bg: #1e1e1e;
+  --navbar-link-color: #e0e0e0;
+  --social-icon-color: #e0e0e0;
+  --btn-outline-color: #e0e0e0;
+  --card-bg: #2c2c2c;
+  --card-border-color: rgba(255,255,255,.125);
+  --about-bg-color: #1a1a1a;
+  --about-text-color: #e0e0e0;
+  --about-muted-color: #888888;
+  --about-card-bg: #2c2c2c;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* --- Global Styles --- */
+.navbar {
+  background-color: var(--navbar-bg) !important;
+  transition: background-color 0.3s ease;
+}
+
+.nav-link {
+    color: var(--navbar-link-color) !important;
+}
+
+.nav-link.active {
+  color: #0d6efd !important;
+}
+
+section {
+    background-color: var(--bg-color);
+    transition: background-color 0.3s ease;
+    color: var(--text-color);
+}
+
+/* --- FIX: Text visibility rules --- */
+.home-title, .home-subtitle, h1, h2, h3, h4, h5, h6, p, a, li {
+    color: inherit; /* Ensures text inherits color from its parent */
+}
+
+.text-muted {
+    color: var(--text-muted-color) !important;
+}
+
+.social-icon {
+    color: var(--social-icon-color) !important;
+}
+
+.btn-outline-dark {
+    color: var(--btn-outline-color);
+    border-color: var(--btn-outline-color);
+}
+
+.btn-outline-dark:hover {
+    background-color: var(--btn-outline-color);
+    color: var(--bg-color);
+}
+
+/* --- Section Specific Theming --- */
+.themed-section {
+    background-color: var(--section-bg-color) !important;
+}
+
+.themed-section .card {
+    background-color: var(--card-bg) !important;
+    border-color: var(--card-border-color) !important;
+}
+
+.about-section {
+    background: var(--about-bg-color) !important;
+    color: var(--about-text-color) !important;
+}
+
+.about-section .lead, .about-section h1, .about-section h2, .about-section h5, .about-section h6, .about-section p {
+    color: var(--about-text-color) !important;
+}
+
+.about-section .text-light {
+    color: var(--about-text-color) !important;
+}
+
+.about-section .text-white-50 {
+    color: var(--about-muted-color) !important;
+}
+
+.about-section .card {
+    background-color: var(--about-card-bg) !important;
+}
+
+.about-section svg path {
+    fill: var(--about-bg-color);
+}
+
+.projects-section svg path {
+    fill: var(--section-bg-color);
+}

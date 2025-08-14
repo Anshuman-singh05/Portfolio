@@ -1,65 +1,103 @@
-import React from 'react';
-import { Link } from 'react-scroll';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import { FaGithub, FaLinkedin } from 'react-icons/fa'; // Step 1: Icons import karo
+// src/components/NavbarComponent.jsx
+import React, { useContext } from "react";
+import { Navbar, Nav, Container } from "react-bootstrap";
+import { Link } from "react-scroll";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import ThemeToggleButton from "./ThemeToggleButton.jsx";
+import { ThemeContext } from "../context/ThemeContext.jsx";
 
 const NavbarComponent = () => {
-  return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
-      <div className="container">
-        <a className="navbar-brand fw-bold" href="#home">My Portfolio</a>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span className="navbar-toggler-icon"></span>
-        </button>
+  const { theme } = useContext(ThemeContext);
 
-        <div className="collapse navbar-collapse" id="navbarNav">
-          {/* Step 2: ms-auto ke saath align-items-center add karo */}
-          <ul className="navbar-nav ms-auto align-items-center">
-            {["home", "about", "projects", "blog", "contact"].map((section) => (
-              <li className="nav-item" key={section}>
-                <Link
-                  to={section}
-                  smooth={true}
-                  duration={500}
-                  offset={-70}
-                  className="nav-link"
-                  style={{ cursor: "pointer" }}
-                  activeClass="active" // Active link ko highlight karne ke liye
-                  spy={true}
-                >
-                  {section.charAt(0).toUpperCase() + section.slice(1)}
-                </Link>
-              </li>
+  const navLinks = [
+    { id: 1, text: "Home", to: "home" },
+    { id: 2, text: "About", to: "about" },
+    { id: 3, text: "Projects", to: "projects" },
+    { id: 4, text: "Contact", to: "contact" },
+  ];
+
+  return (
+    <Navbar
+      expand="lg"
+      fixed="top"
+      className={`py-3 ${theme === "dark" ? "bg-dark navbar-dark" : "bg-light navbar-light"}`}
+    >
+      <Container>
+        {/* Brand */}
+        <Navbar.Brand href="#" style={{ fontWeight: "bold" }}>
+          My Portfolio
+        </Navbar.Brand>
+
+        {/* Toggle for mobile */}
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
+        {/* Nav Links */}
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto align-items-center">
+            {navLinks.map((link) => (
+              <Link
+                key={link.id}
+                activeClass="active-link"
+                to={link.to}
+                spy={true}
+                smooth={true}
+                offset={-70}
+                duration={500}
+                className="nav-link custom-nav-link"
+              >
+                {link.text}
+              </Link>
             ))}
-            
-            {/* Step 3: Social media links add karo */}
-            <li className="nav-item ms-lg-3">
-              <a 
-                href="https://github.com/your-github-username" // Apna GitHub username daalo
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="nav-link"
-                title="GitHub"
-              >
-                <FaGithub size={22} />
-              </a>
-            </li>
-            <li className="nav-item">
-              <a 
-                href="https://linkedin.com/in/your-linkedin-profile" // Apna LinkedIn profile daalo
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="nav-link"
-                title="LinkedIn"
-              >
-                <FaLinkedin size={22} />
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-link"
+              style={{ cursor: "pointer" }}
+              onClick={() => setExpanded(false)}
+            >
+              Resume
+            </a>
+
+            {/* Social Icons */}
+            <Nav.Link
+              href="https://github.com/Anshuman-singh05"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="d-flex align-items-center"
+            >
+              <FaGithub size={20} />
+            </Nav.Link>
+            <Nav.Link
+              href="https://www.linkedin.com/in/anshumansingh2005/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="d-flex align-items-center"
+            >
+              <FaLinkedin size={20} />
+            </Nav.Link>
+
+            {/* Theme Toggle */}
+            <ThemeToggleButton />
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+
+      {/* Styles */}
+      <style jsx>{`
+        .custom-nav-link {
+          cursor: pointer;
+          transition: color 0.3s ease;
+        }
+        .custom-nav-link:hover {
+          color: blue !important;
+        }
+        .active-link {
+          color: blue !important;
+          font-weight: bold;
+        }
+      `}</style>
+    </Navbar>
   );
 };
 
