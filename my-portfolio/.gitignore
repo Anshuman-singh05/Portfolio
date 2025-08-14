@@ -7,11 +7,6 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,8 +17,19 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
 # Environment Variables
 .env
 .env.local
 .env.development
 .env.production
+/backend/.env # <-- Backend .env file add ki
+
+# Dependencies
+node_modules
+/backend/node_modules # <-- Backend node_modules add kiya
+
+# Production Build
+dist
+dist-ssr
+*.local
