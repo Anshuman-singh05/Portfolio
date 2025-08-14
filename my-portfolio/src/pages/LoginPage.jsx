@@ -21,7 +21,8 @@ const LoginPage = () => {
     setError(''); // Clear previous errors
     try {
       // API call to the backend login route
-      const res = await axios.post('http://localhost:5000/api/auth/login', formData);
+      const apiUrl = `${import.meta.env.VITE_API_URL}/api/auth/login`;
+      const res = await axios.post(apiUrl, formData);
       
       // Save the token to localStorage
       localStorage.setItem('token', res.data.token);

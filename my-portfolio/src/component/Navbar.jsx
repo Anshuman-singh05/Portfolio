@@ -25,7 +25,7 @@ const NavbarComponent = () => {
       <Container>
         {/* Brand */}
         <Navbar.Brand href="#" style={{ fontWeight: "bold" }}>
-          My Portfolio
+          Anshuman Singh
         </Navbar.Brand>
 
         {/* Toggle for mobile */}
@@ -66,7 +66,7 @@ const NavbarComponent = () => {
               rel="noopener noreferrer"
               className="d-flex align-items-center"
             >
-              <FaGithub size={20} />
+              <FaGithub size={30} />
             </Nav.Link>
             <Nav.Link
               href="https://www.linkedin.com/in/anshumansingh2005/"
@@ -74,7 +74,7 @@ const NavbarComponent = () => {
               rel="noopener noreferrer"
               className="d-flex align-items-center"
             >
-              <FaLinkedin size={20} />
+              <FaLinkedin size={30} />
             </Nav.Link>
 
             {/* Theme Toggle */}

@@ -1,12 +1,10 @@
 import express from 'express';
 import Project from '../models/Project.js';
-import authMiddleware from '../middleware/auth.js'; // Middleware import karo
+import authMiddleware from '../middleware/auth.js';
 
 const router = express.Router();
 
 // --- PUBLIC ROUTE ---
-// @route   GET /api/projects
-// @desc    Get all projects
 router.get('/', async (req, res) => {
   try {
     const projects = await Project.find().sort({ createdAt: -1 });
@@ -21,7 +19,7 @@ router.get('/', async (req, res) => {
 
 // @route   POST /api/projects
 // @desc    Create a new project
-router.post('/', authMiddleware, async (req, res) => { // Middleware yahan add kiya
+router.post('/', authMiddleware, async (req, res) => {
   try {
     const newProject = new Project({
       title: req.body.title,
@@ -30,6 +28,7 @@ router.post('/', authMiddleware, async (req, res) => { // Middleware yahan add k
       tags: req.body.tags,
       liveLink: req.body.liveLink,
       githubLink: req.body.githubLink,
+      documentationLink: req.body.documentationLink, // <-- Nayi field yahan add ki
     });
 
     const project = await newProject.save();
@@ -42,7 +41,7 @@ router.post('/', authMiddleware, async (req, res) => { // Middleware yahan add k
 
 // @route   DELETE /api/projects/:id
 // @desc    Delete a project
-router.delete('/:id', authMiddleware, async (req, res) => { // Middleware yahan add kiya
+router.delete('/:id', authMiddleware, async (req, res) => {
   try {
     let project = await Project.findById(req.params.id);
     if (!project) {

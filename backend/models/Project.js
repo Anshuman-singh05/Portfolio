@@ -14,7 +14,7 @@ const ProjectSchema = new mongoose.Schema({
     required: true,
   },
   tags: {
-    type: [String], // Array of strings
+    type: [String],
   },
   liveLink: {
     type: String,
@@ -22,9 +22,13 @@ const ProjectSchema = new mongoose.Schema({
   githubLink: {
     type: String,
   },
+  // --- Nayi field yahan add ki ---
+  documentationLink: {
+    type: String, 
+  },
   createdAt: {
     type: Date,
-    default: Date.now, // Automatically aaj ki date daal dega
+    default: Date.now,
   },
 });
 

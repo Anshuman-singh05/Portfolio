@@ -23,18 +23,18 @@ const AdminDashboard = () => {
     tags: '',
     liveLink: '',
     githubLink: '',
+    documentationLink: '', 
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  // Function to get the auth token from localStorage
   const getToken = () => localStorage.getItem('token');
+  const apiUrl = import.meta.env.VITE_API_URL;
 
-  // Fetch all projects when the component loads
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/projects');
+        const res = await axios.get(`${apiUrl}/api/projects`);
         setProjects(res.data);
       } catch (err) {
         console.error('Error fetching projects:', err);
@@ -42,12 +42,11 @@ const AdminDashboard = () => {
       }
     };
     fetchProjects();
-  }, []);
+  }, [apiUrl]);
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  // Handle Add Project form submission
   const onSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -60,19 +59,18 @@ const AdminDashboard = () => {
       },
     };
 
-    // Convert comma-separated tags string to an array
     const projectData = {
       ...formData,
       tags: formData.tags.split(',').map(tag => tag.trim()),
     };
 
     try {
-      const res = await axios.post('http://localhost:5000/api/projects', projectData, config);
-      setProjects([res.data, ...projects]); // Add new project to the top of the list
+      const res = await axios.post(`${apiUrl}/api/projects`, projectData, config);
+      setProjects([res.data, ...projects]);
       setSuccess('Project added successfully!');
-      // Clear form
+      // Form clear karte waqt nayi field ko bhi clear kiya
       setFormData({
-        title: '', description: '', imageUrl: '', tags: '', liveLink: '', githubLink: '',
+        title: '', description: '', imageUrl: '', tags: '', liveLink: '', githubLink: '', documentationLink: ''
       });
     } catch (err) {
       setError('Failed to add project.');
@@ -80,12 +78,11 @@ const AdminDashboard = () => {
     }
   };
 
-  // Handle Delete Project
   const deleteProject = async (id) => {
     if (window.confirm('Are you sure you want to delete this project?')) {
       const config = { headers: { 'x-auth-token': getToken() } };
       try {
-        await axios.delete(`http://localhost:5000/api/projects/${id}`, config);
+        await axios.delete(`${apiUrl}/api/projects/${id}`, config);
         setProjects(projects.filter((project) => project._id !== id));
         setSuccess('Project deleted successfully!');
       } catch (err) {
@@ -111,7 +108,6 @@ const AdminDashboard = () => {
 
       <Container>
         <Row>
-          {/* Add Project Form */}
           <Col md={5}>
             <Card>
               <Card.Header as="h4">Add New Project</Card.Header>
@@ -119,6 +115,7 @@ const AdminDashboard = () => {
                 {error && <Alert variant="danger">{error}</Alert>}
                 {success && <Alert variant="success">{success}</Alert>}
                 <Form onSubmit={onSubmit}>
+                  {/* ... baaki ke form fields ... */}
                   <Form.Group className="mb-3">
                     <Form.Label>Title</Form.Label>
                     <Form.Control type="text" name="title" value={formData.title} onChange={onChange} required />
@@ -143,13 +140,19 @@ const AdminDashboard = () => {
                     <Form.Label>GitHub Link</Form.Label>
                     <Form.Control type="text" name="githubLink" value={formData.githubLink} onChange={onChange} />
                   </Form.Group>
+                  
+                  {/* --- Naya Documentation Link Field --- */}
+                  <Form.Group className="mb-3">
+                    <Form.Label>Documentation Link (PDF URL)</Form.Label>
+                    <Form.Control type="text" name="documentationLink" value={formData.documentationLink} onChange={onChange} />
+                  </Form.Group>
+
                   <Button variant="primary" type="submit" className="w-100">Add Project</Button>
                 </Form>
               </Card.Body>
             </Card>
           </Col>
 
-          {/* Projects List */}
           <Col md={7}>
             <Card>
               <Card.Header as="h4">Existing Projects</Card.Header>
