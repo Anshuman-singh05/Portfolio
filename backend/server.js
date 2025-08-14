@@ -2,6 +2,10 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import projectRoutes from './routes/project.js';
+import contactRoutes from './routes/contact.js';
+import authRoutes from './routes/auth.js';
+
 
 dotenv.config();
 
