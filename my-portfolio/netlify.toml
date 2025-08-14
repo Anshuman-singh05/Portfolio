@@ -7,8 +7,8 @@
   # The directory that contains your built site (for Vite, it's 'dist')
   publish = "dist"
   
-  # The directory where your frontend code is (root of the repo)
-  base = "/"
+  # --- FIX: Tell Netlify your project is in the 'my-portfolio' folder ---
+  base = "my-portfolio"
 
 # Redirect rule for Single Page Applications (SPA)
 # This rule ensures that all paths are sent to index.html
