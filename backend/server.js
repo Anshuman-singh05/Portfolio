@@ -5,10 +5,13 @@ import dotenv from "dotenv";
 import contactRoutes from "./routes/contact.js";
 import authRoutes from "./routes/auth.js";
 import projectRoutes from "./routes/projects.js";
+import connectDB from "./db.js";
 
 dotenv.config();
 
 const app = express();
+
+connectDB();
 
 // ✅ Allowed origins
 const allowedOrigins = [
