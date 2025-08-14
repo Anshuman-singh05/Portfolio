@@ -2,10 +2,9 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import projectRoutes from './routes/project.js';
-import contactRoutes from './routes/contact.js';
-import authRoutes from './routes/auth.js';
-
+import contactRoutes from "./routes/contact.js";
+import authRoutes from "./routes/auth.js";
+import projectRoutes from "./routes/project.js";
 
 dotenv.config();
 
@@ -31,9 +30,7 @@ app.use(cors({
 app.use(express.json());
 
 // ✅ Routes import
-import contactRoutes from "./routes/contact.js";
-import authRoutes from "./routes/auth.js";
-import projectRoutes from "./routes/project.js";
+
 
 // ✅ Mount routes
 app.use("/api/contact", contactRoutes);
